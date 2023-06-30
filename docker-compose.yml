@@ -1,5 +1,16 @@
 version: '3'
 services:
+    phpmyadmin:
+        container_name: PHPMyAdmin
+        image: phpmyadmin
+        restart: always
+        ports:
+        - 8000:80
+        networks:
+        - sail
+        environment:
+        - PMA_ARBITRARY=1
+        - PMA_HOST=mysql
     laravel.test:
         build:
             context: ./vendor/laravel/sail/runtimes/8.2
