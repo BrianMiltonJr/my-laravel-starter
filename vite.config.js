@@ -1,36 +1,20 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
-import { svelte } from "@sveltejs/vite-plugin-svelte";
-import { resolve } from 'path';
-import autoPreprocess from 'svelte-preprocess';
-const projectRootDir = resolve(__dirname);
+import vue from '@vitejs/plugin-vue';
 
 export default defineConfig({
     plugins: [
         laravel({
-            input: ['resources/js/app.js'],
+            input: 'resources/js/app.js',
             refresh: true,
         }),
-        svelte({
-            preprocess: autoPreprocess(),
-        })
+        vue({
+            template: {
+                transformAssetUrls: {
+                    base: null,
+                    includeAbsolute: false,
+                },
+            },
+        }),
     ],
-    optimizeDeps: {
-        include: [
-            '@inertiajs/inertia',
-            '@inertiajs/inertia-svelte',
-        ]
-    },
-    resolve: {
-        alias: {
-            '@': resolve(projectRootDir, 'resources/js'),
-            '~': resolve(projectRootDir, 'resources'),
-        },
-        extensions: ['.js', '.svelte', '.json'],
-    },
-    server: {
-        hmr: {
-         host: 'localhost'
-        }    
-    }
 });

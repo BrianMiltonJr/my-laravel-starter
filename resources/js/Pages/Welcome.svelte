@@ -1,5 +1,8 @@
 <script>
+    import { Link, page } from "@inertiajs/inertia-svelte";
     import { _ } from 'svelte-i18n';
+    export let canLogin;
+    export let canRegister;
     export let laravelVersion;
     export let phpVersion;
 </script>
@@ -11,6 +14,35 @@
 <div
     class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0"
 >
+    {#if canLogin}
+        <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
+            {#if $page.props.auth.user}
+                <Link
+                    href="/dashboard"
+                    class="text-sm text-gray-700 underline dark:text-white"
+                >
+                    {$_('Dashboard')}
+                </Link>
+            {:else}
+                <Link
+                    href="/login"
+                    class="text-sm text-gray-700 underline dark:text-white"
+                >
+                    {$_('Log in')}
+                </Link>
+
+                {#if canRegister}
+                    <Link
+                        href="/register"
+                        class="ml-4 text-sm text-gray-700 underline dark:text-white"
+                    >
+                        {$_('Register')}
+                    </Link>
+                {/if}
+            {/if}
+        </div>
+    {/if}
+
     <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
         <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
             <svg
